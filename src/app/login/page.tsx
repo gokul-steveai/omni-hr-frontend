@@ -33,8 +33,8 @@ export default function LoginPage() {
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white">RBAC Security</h4>
-                <p className="text-xs text-slate-400 mt-0.5">Strict role-based access for Super Admin, HR, Leads, and Employees.</p>
+                <h4 className="text-sm font-semibold text-white">Admin-Provisioned Accounts</h4>
+                <p className="text-xs text-slate-400 mt-0.5">Strict security policies require HR/Admin activation before login.</p>
               </div>
             </div>
 
@@ -53,21 +53,12 @@ export default function LoginPage() {
         {/* Right Auth Container */}
         <div className="lg:col-span-5">
           <AuthCard
-            authMode={authForm.authMode}
-            setAuthMode={authForm.setAuthMode}
             email={authForm.email}
             setEmail={authForm.setEmail}
             password={authForm.password}
             setPassword={authForm.setPassword}
-            firstName={authForm.firstName}
-            setFirstName={authForm.setFirstName}
-            lastName={authForm.lastName}
-            setLastName={authForm.setLastName}
-            role={authForm.role}
-            setRole={authForm.setRole}
             isLoading={authForm.isLoading}
             errorMsg={authForm.errorMsg}
-            successMsg={authForm.successMsg}
             onSubmit={authForm.handleSubmit}
           />
         </div>

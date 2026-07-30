@@ -19,7 +19,7 @@ export interface UserProfileData {
   bank_name?: string | null;
   ifsc_swift_code?: string | null;
   pan_ssn?: string | null;
-  joining_date?: string;
+  joining_date?: string | null;
 }
 
 export interface UserProfile {
