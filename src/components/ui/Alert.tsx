@@ -1,24 +1,34 @@
+import { ReactNode, ElementType } from "react";
 import { AlertCircle, CheckCircle2, Info } from "lucide-react";
-import { ReactNode } from "react";
 
 interface AlertProps {
-  children: ReactNode;
   variant?: "error" | "success" | "info";
+  children: ReactNode;
   className?: string;
 }
 
-const variantStyles: Record<string, { container: string; icon: any }> = {
-  error: { container: "bg-rose-500/10 border-rose-500/20 text-rose-400", icon: AlertCircle },
-  success: { container: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400", icon: CheckCircle2 },
-  info: { container: "bg-indigo-500/10 border-indigo-500/20 text-indigo-400", icon: Info },
+const variantStyles: Record<"error" | "success" | "info", { container: string; icon: ElementType }> = {
+  error: {
+    container: "bg-rose-500/10 border-rose-500/30 text-rose-300",
+    icon: AlertCircle,
+  },
+  success: {
+    container: "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+    icon: CheckCircle2,
+  },
+  info: {
+    container: "bg-indigo-500/10 border-indigo-500/30 text-indigo-300",
+    icon: Info,
+  },
 };
 
-export function Alert({ children, variant = "error", className = "" }: AlertProps) {
-  const { container, icon: Icon } = variantStyles[variant];
+export function Alert({ variant = "error", children, className = "" }: AlertProps) {
+  const config = variantStyles[variant];
+  const IconComponent = config.icon;
 
   return (
-    <div className={`p-4 rounded-xl border text-sm flex items-start gap-3 ${container} ${className}`}>
-      <Icon className="w-5 h-5 shrink-0 mt-0.5" />
+    <div className={`p-4 rounded-xl border flex items-center gap-3 text-sm font-medium ${config.container} ${className}`}>
+      <IconComponent className="w-5 h-5 shrink-0" />
       <div>{children}</div>
     </div>
   );

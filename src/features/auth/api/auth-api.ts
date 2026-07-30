@@ -1,36 +1,30 @@
 import { apiClient } from "@/lib/api-client";
-import { LoginPayload, RegisterPayload, TokenResponseData } from "@/features/auth/types/auth-types";
+import { LoginPayload, TokenResponseData } from "@/features/auth/types/auth-types";
 import { UserProfile } from "@/types/user";
 
-export interface StandardApiResponse<T> {
+export interface StandardResponse<T> {
   success: boolean;
   data: T;
-  error?: {
-    code: string;
-    message: string;
-  } | null;
+  error: { code: string; message: string } | null;
 }
 
+export type StandardApiResponse<T> = StandardResponse<T>;
+
 export const authApi = {
-  login: async (payload: LoginPayload): Promise<StandardApiResponse<TokenResponseData>> => {
-    const res = await apiClient.post("/auth/login", payload);
+  login: async (payload: LoginPayload) => {
+    const res = await apiClient.post<StandardResponse<TokenResponseData>>("/auth/login", payload);
     return res.data;
   },
 
-  register: async (payload: RegisterPayload): Promise<StandardApiResponse<TokenResponseData>> => {
-    const res = await apiClient.post("/auth/register", payload);
-    return res.data;
-  },
-
-  getMe: async (token: string): Promise<StandardApiResponse<UserProfile>> => {
-    const res = await apiClient.get("/auth/me", {
+  getMe: async (token: string) => {
+    const res = await apiClient.get<StandardResponse<UserProfile>>("/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
   },
 
-  logout: async (refreshToken: string): Promise<StandardApiResponse<{ message: string }>> => {
-    const res = await apiClient.post("/auth/logout", { refresh_token: refreshToken });
+  logout: async (refreshToken: string) => {
+    const res = await apiClient.post<StandardResponse<{ message: string }>>("/auth/logout", { refresh_token: refreshToken });
     return res.data;
   },
 };
